@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const lineItems = products.map((p) => ({
       price_data: {
         currency: 'eur',
-        unit_amount: p.price,
+        unit_amount: p.price * 100,
         product_data: {
           name: `${p.maison_name} — ${p.title}`,
           metadata: { lot: p.lot, product_id: p.id },
