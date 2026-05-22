@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Piece } from '@/data/pieces';
 import LampSilhouette from './LampSilhouette';
 import LotMark from './atoms/LotMark';
@@ -30,10 +31,12 @@ export default function ProductCard({ piece, imageUrl }: ProductCardProps) {
         }}
       >
         {imageUrl ? (
-          <img
+          <Image
             src={imageUrl}
             alt={piece.title}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectFit: 'cover' }}
           />
         ) : (
           <LampSilhouette tone={piece.shadeTone} scale={1.3} />
