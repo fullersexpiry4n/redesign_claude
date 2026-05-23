@@ -86,7 +86,7 @@ export default function Header() {
           onClick={() => setMenuOpen((o) => !o)}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
-          aria-label={menuOpen ? 'Chiudi menu' : 'Apri menu'}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           style={{
             fontFamily: 'var(--font-mono)',
             fontSize: 11,
@@ -142,7 +142,6 @@ export default function Header() {
             padding: '20px 0',
             borderBottom: '1px solid rgba(20,20,20,0.08)',
           }}
-          onClick={closeMenu}
         >
           <CartBadge />
         </div>

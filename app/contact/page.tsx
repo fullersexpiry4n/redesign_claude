@@ -95,9 +95,10 @@ export default function ContactPage() {
                 </label>
                 <input
                   id="contact-name"
+                  name="name"
                   className="field"
                   type="text"
-                  placeholder="—"
+                  placeholder="Your name…"
                   required
                   aria-required="true"
                   autoComplete="name"
@@ -109,9 +110,10 @@ export default function ContactPage() {
                 </label>
                 <input
                   id="contact-email"
+                  name="email"
                   className="field"
                   type="email"
-                  placeholder="—"
+                  placeholder="you@example.com…"
                   required
                   aria-required="true"
                   autoComplete="email"
@@ -124,9 +126,10 @@ export default function ContactPage() {
                 </label>
                 <input
                   id="contact-piece"
+                  name="piece"
                   className="field"
                   type="text"
-                  placeholder="№ 0142, or describe what you are looking for"
+                  placeholder="№ 0142, or describe what you are looking for…"
                   autoComplete="off"
                 />
               </div>
@@ -136,9 +139,10 @@ export default function ContactPage() {
                 </label>
                 <textarea
                   id="contact-message"
+                  name="message"
                   className="field"
                   rows={4}
-                  placeholder="A note to the dealer, not a checkout."
+                  placeholder="A note to the dealer, not a checkout…"
                   style={{ resize: 'none' }}
                 />
               </div>

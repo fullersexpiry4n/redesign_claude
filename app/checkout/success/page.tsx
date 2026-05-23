@@ -74,8 +74,7 @@ export default function CheckoutSuccessPage() {
           maxWidth: '48ch',
         }}
       >
-        Payment received. You will receive an email confirmation shortly. We will be in touch
-        to arrange shipping and packaging.
+        We will be in touch to arrange shipping and packaging.
       </p>
 
       <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>

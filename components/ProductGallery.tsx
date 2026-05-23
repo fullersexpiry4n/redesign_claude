@@ -14,6 +14,7 @@ type Props = {
 
 export default function ProductGallery({ images, title, shadeTone }: Props) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [mainLoaded, setMainLoaded] = useState(false);
   const active = images[activeIdx] ?? images[0] ?? null;
 
   return (
@@ -28,14 +29,20 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
           overflow: 'hidden',
         }}
       >
+        {/* Shimmer shown until image loads */}
+        {active && !mainLoaded && (
+          <div className="image-shimmer" style={{ position: 'absolute', inset: 0, zIndex: 1 }} />
+        )}
         {active ? (
           <Image
             src={active.url}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 55vw"
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', opacity: mainLoaded ? 1 : 0, transition: 'opacity 300ms ease' }}
             priority
+            unoptimized
+            onLoad={() => setMainLoaded(true)}
           />
         ) : (
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -47,8 +54,8 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
           <>
             <button
               type="button"
-              onClick={() => setActiveIdx((activeIdx - 1 + images.length) % images.length)}
-              aria-label="Vorige afbeelding"
+              onClick={() => { setMainLoaded(false); setActiveIdx((activeIdx - 1 + images.length) % images.length); }}
+              aria-label="Previous image"
               style={{
                 position: 'absolute',
                 left: 12,
@@ -73,8 +80,8 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
             </button>
             <button
               type="button"
-              onClick={() => setActiveIdx((activeIdx + 1) % images.length)}
-              aria-label="Volgende afbeelding"
+              onClick={() => { setMainLoaded(false); setActiveIdx((activeIdx + 1) % images.length); }}
+              aria-label="Next image"
               style={{
                 position: 'absolute',
                 right: 12,
@@ -115,7 +122,9 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
             <button
               key={img.id}
               type="button"
-              onClick={() => setActiveIdx(i)}
+              onClick={() => { setMainLoaded(false); setActiveIdx(i); }}
+              aria-label={`Image ${i + 1}`}
+              aria-pressed={i === activeIdx}
               style={{
                 width: 72,
                 height: 72,

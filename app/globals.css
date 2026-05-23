@@ -103,7 +103,7 @@ html {
 }
 
 body {
-  background: var(--bg);
+  background: transparent;
   min-height: 100vh;
 }
 
@@ -191,11 +191,11 @@ code, kbd, samp {
   border-bottom: 1px solid var(--inchiostro);
   padding: 12px 0;
   width: 100%;
-  outline: none;
   border-radius: 0;
   appearance: none;
 }
-.field:focus {
+.field:focus-visible {
+  outline: none;
   border-bottom-color: var(--ottone-brunito);
   border-bottom-width: 2px;
   padding-bottom: 11px;
@@ -256,6 +256,22 @@ code, kbd, samp {
 [role="button"],
 .clickable {
   cursor: pointer;
+}
+
+/* — Image shimmer skeleton -------------------------------------------------- */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+.image-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--travertino) 25%,
+    var(--avorio)     50%,
+    var(--travertino) 75%
+  );
+  background-size: 1200px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
 }
 
 /* =========================================================================

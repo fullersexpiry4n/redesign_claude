@@ -28,7 +28,7 @@ export default function AddToCartButton({ item, status }: Props) {
           lineHeight: 1,
         }}
       >
-        VENDUTO · SOLD
+        SOLD
       </div>
     );
   }
@@ -48,7 +48,7 @@ export default function AddToCartButton({ item, status }: Props) {
           lineHeight: 1,
         }}
       >
-        RISERVATO · RESERVED
+        RESERVED
       </div>
     );
   }
@@ -72,7 +72,7 @@ export default function AddToCartButton({ item, status }: Props) {
           transition: 'background 120ms ease',
         }}
       >
-        IN CARRELLO · REMOVE
+        IN CART · REMOVE
       </button>
     );
   }
@@ -95,7 +95,7 @@ export default function AddToCartButton({ item, status }: Props) {
         transition: 'background 120ms ease',
       }}
     >
-      AGGIUNGI · ADD TO CART
+      ADD TO CART
     </button>
   );
 }

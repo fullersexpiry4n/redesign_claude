@@ -31,7 +31,7 @@ export default function AdminLogout() {
         whiteSpace: 'nowrap',
       }}
     >
-      Esci
+      Sign out
     </button>
   );
 }

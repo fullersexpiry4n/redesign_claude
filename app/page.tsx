@@ -62,7 +62,7 @@ export default async function HomePage() {
                 margin: 0,
               }}
             >
-              <em>Ritorni</em> — latest pieces
+              <em>Latest</em> — new arrivals
             </h2>
             <Link
               href="/catalogue"

@@ -27,7 +27,7 @@ export default function MaisonsPage() {
         >
           <em>Maisons</em>
         </h1>
-        <MonoCaps opacity={0.6}>{MAISONS.length} case · 1932 — présent</MonoCaps>
+        <MonoCaps opacity={0.6}>{MAISONS.length} houses · 1932 — present</MonoCaps>
       </div>
 
       <DrawRule width={80} style={{ margin: '24px 0 0' }} />

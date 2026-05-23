@@ -63,6 +63,7 @@ function ProductCard({ p, imageUrl }: { p: ProductSummary; imageUrl?: string }) 
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             style={{ objectFit: 'cover' }}
+            unoptimized
           />
         ) : (
           <LampSilhouette tone={p.shade_tone ?? 'warm'} scale={1.3} />
@@ -83,7 +84,7 @@ function ProductCard({ p, imageUrl }: { p: ProductSummary; imageUrl?: string }) 
               padding: '4px 8px',
             }}
           >
-            VENDUTO
+            SOLD
           </div>
         )}
 
@@ -102,7 +103,7 @@ function ProductCard({ p, imageUrl }: { p: ProductSummary; imageUrl?: string }) 
               padding: '4px 8px',
             }}
           >
-            RISERVATO
+            RESERVED
           </div>
         )}
       </div>
@@ -154,10 +155,10 @@ function ProductCard({ p, imageUrl }: { p: ProductSummary; imageUrl?: string }) 
         >
           {sold ? (
             <span style={{ opacity: 0.45, fontSize: 13, fontFamily: 'var(--font-mono)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
-              Venduto
+              Sold
             </span>
           ) : (
-            `€ ${p.price.toLocaleString('it-IT')}`
+            `€ ${p.price.toLocaleString('en-GB')}`
           )}
         </div>
       </div>
@@ -213,6 +214,7 @@ export default function CatalogueClient({ products, imageMap = {} }: Props) {
           <button
             key={d}
             onClick={() => setActive(d)}
+            aria-pressed={d === active}
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: 10,

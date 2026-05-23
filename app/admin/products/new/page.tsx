@@ -4,7 +4,7 @@ import ProductForm from '../ProductForm';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Nuovo pezzo · Admin · RE·DESIGN',
+  title: 'New piece · Admin · RE·DESIGN',
   robots: { index: false },
 };
 
@@ -36,7 +36,7 @@ export default function NewProductPage() {
           margin: '0 0 8px',
         }}
       >
-        Nuovo pezzo
+        New piece
       </h1>
 
       <hr

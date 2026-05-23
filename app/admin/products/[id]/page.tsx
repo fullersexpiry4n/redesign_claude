@@ -8,7 +8,7 @@ import type { Metadata } from 'next';
 type Props = { params: Promise<{ id: string }> };
 
 export const metadata: Metadata = {
-  title: 'Modifica pezzo · Admin · RE·DESIGN',
+  title: 'Edit piece · Admin · RE·DESIGN',
   robots: { index: false },
 };
 

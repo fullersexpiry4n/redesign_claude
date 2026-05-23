@@ -16,7 +16,7 @@ export default function VisitaPage() {
           lineHeight: 1,
         }}
       >
-        <em>Visita</em>
+        <em>Visit</em>
       </h1>
 
       <DrawRule width={80} style={{ margin: '24px 0 32px' }} />
@@ -30,7 +30,7 @@ export default function VisitaPage() {
             maxWidth: '56ch',
           }}
         >
-          Lo showroom è in Milano, in zona Brera. Su appuntamento, martedì — sabato.
+          The showroom is in Milan, in the Brera district. By appointment, Tuesday — Saturday.
           Each piece in the catalogue is photographed where it sits; visiting in person is
           the only way to assess condition, to read patina, to see the lamp doing its job.
         </p>
@@ -46,10 +46,10 @@ export default function VisitaPage() {
           }}
         >
           {[
-            ['Indirizzo', 'Via dell\'Orso 12 · 20121 Milano'],
-            ['Orari', 'Mar — Sab · 11.00 — 18.00 · su appuntamento'],
-            ['Contatto', 'visita@redesign.shop'],
-            ['Telefono', '+39 02 8242 0000'],
+            ['Address', 'Via dell\'Orso 12 · 20121 Milano'],
+            ['Hours', 'Tue — Sat · 11:00 — 18:00 · by appointment'],
+            ['Contact', 'visita@redesign.shop'],
+            ['Phone', '+39 02 8242 0000'],
           ].map(([label, value]) => (
             <React.Fragment key={label}>
               <MonoCaps size={10} opacity={0.55} as="div">
@@ -63,7 +63,7 @@ export default function VisitaPage() {
                   lineHeight: 1.5,
                 }}
               >
-                {label === 'Contatto' ? (
+                {label === 'Contact' ? (
                   <a
                     href="mailto:visita@redesign.shop"
                     style={{ color: 'var(--ottone-brunito)', borderBottom: '1px solid var(--ottone-brunito)' }}
@@ -91,7 +91,7 @@ export default function VisitaPage() {
             }}
           />
           <MonoCaps size={11} opacity={0.6} as="div" style={{ marginBottom: 12 }}>
-            § Come raggiungerci
+            § How to find us
           </MonoCaps>
           <p
             style={{
@@ -101,8 +101,8 @@ export default function VisitaPage() {
               maxWidth: '46ch',
             }}
           >
-            Metro: Lanza (M2), 3 minuti a piedi. Tram: linea 12/14, fermata
-            Pontaccio. Parcheggio: Parking Monumentale, 400 m.
+            Metro: Lanza (M2), 3 min walk. Tram: lines 12/14, stop
+            Pontaccio. Parking: Monumentale, 400 m.
           </p>
         </div>
       </RevealOnScroll>

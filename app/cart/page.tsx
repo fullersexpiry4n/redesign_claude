@@ -48,7 +48,7 @@ export default function CartPage() {
           fontStyle: 'italic',
         }}
       >
-        Carrello
+        Cart
       </h1>
 
       <hr
@@ -156,10 +156,11 @@ export default function CartPage() {
                       marginBottom: 12,
                     }}
                   >
-                    € {item.price.toLocaleString('it-IT')}
+                    € {item.price.toLocaleString('en-GB')}
                   </div>
                   <button
                     onClick={() => remove(item.productId)}
+                    aria-label={`Remove ${item.title}`}
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: 10,
@@ -206,7 +207,7 @@ export default function CartPage() {
                 fontSize: 28,
               }}
             >
-              € {total.toLocaleString('it-IT')}
+              € {total.toLocaleString('en-GB')}
             </span>
           </div>
 

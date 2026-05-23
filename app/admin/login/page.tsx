@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
             margin: '0 0 32px',
           }}
         >
-          Accesso
+          Sign in
         </h1>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -102,7 +102,6 @@ export default function AdminLoginPage() {
                 padding: '12px 14px',
                 border: '1px solid rgba(20,20,20,0.3)',
                 background: 'transparent',
-                outline: 'none',
                 boxSizing: 'border-box',
               }}
             />
@@ -138,7 +137,6 @@ export default function AdminLoginPage() {
                 padding: '12px 14px',
                 border: '1px solid rgba(20,20,20,0.3)',
                 background: 'transparent',
-                outline: 'none',
                 boxSizing: 'border-box',
               }}
             />
@@ -180,7 +178,7 @@ export default function AdminLoginPage() {
               lineHeight: 1,
             }}
           >
-            {loading ? 'Accesso in corso…' : 'Accedi'}
+            {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
       </div>

@@ -204,7 +204,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
 
         if (!ok) {
           setUploadProgress(null);
-          setError(`Prodotto salvato, ma upload ${i + 1} fallito`);
+          setError(`Product saved, but upload ${i + 1} failed`);
           setLoading(false);
           return;
         }
@@ -218,7 +218,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
 
   async function handleDelete() {
     if (!product?.id) return;
-    if (!window.confirm(`Eliminare "${product.title}"? Questa azione è irreversibile.`)) return;
+    if (!window.confirm(`Delete "${product.title}"? This action is irreversible.`)) return;
 
     setLoading(true);
     const supabase = createClient();
@@ -248,7 +248,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
       setExistingImages((prev) => prev.filter((i) => i.id !== imageId));
     } else {
       const body = await res.json();
-      setError(`Eliminazione fallita: ${body.error}`);
+      setError(`Deletion failed: ${body.error}`);
     }
     setDeletingId(null);
   }
@@ -266,6 +266,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
         <Field label="Lot *" id="f-lot">
           <input
             id="f-lot"
+            name="lot"
             value={form.lot}
             onChange={(e) => set('lot', e.target.value)}
             required
@@ -273,20 +274,22 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
           />
         </Field>
 
-        <Field label="Tipo *" id="f-type">
+        <Field label="Type *" id="f-type">
           <input
             id="f-type"
+            name="type"
             value={form.type}
             onChange={(e) => set('type', e.target.value)}
-            placeholder="es. Lampada da tavolo"
+            placeholder="e.g. Table lamp"
             required
             style={FIELD_STYLE}
           />
         </Field>
 
-        <Field label="Titolo *" id="f-title">
+        <Field label="Title *" id="f-title">
           <input
             id="f-title"
+            name="title"
             value={form.title}
             onChange={(e) => set('title', e.target.value)}
             required
@@ -294,31 +297,34 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
           />
         </Field>
 
-        <Field label="Maison (sigla) *" id="f-maison">
+        <Field label="Maison (code) *" id="f-maison">
           <input
             id="f-maison"
+            name="maison"
             value={form.maison}
             onChange={(e) => set('maison', e.target.value)}
-            placeholder="es. STILNOVO"
+            placeholder="e.g. STILNOVO"
             required
             style={FIELD_STYLE}
           />
         </Field>
 
-        <Field label="Maison (nome completo) *" id="f-maison-name">
+        <Field label="Maison (full name) *" id="f-maison-name">
           <input
             id="f-maison-name"
+            name="maison_name"
             value={form.maison_name}
             onChange={(e) => set('maison_name', e.target.value)}
-            placeholder="es. Stilnovo S.p.A."
+            placeholder="e.g. Stilnovo S.p.A."
             required
             style={FIELD_STYLE}
           />
         </Field>
 
-        <Field label="Città *" id="f-city">
+        <Field label="City *" id="f-city">
           <input
             id="f-city"
+            name="city"
             value={form.city}
             onChange={(e) => set('city', e.target.value)}
             required
@@ -326,9 +332,10 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
           />
         </Field>
 
-        <Field label="Anno *" id="f-year">
+        <Field label="Year *" id="f-year">
           <input
             id="f-year"
+            name="year"
             type="number"
             inputMode="numeric"
             value={form.year}
@@ -343,25 +350,28 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
         <Field label="Designer" id="f-designer">
           <input
             id="f-designer"
+            name="designer"
             value={form.designer}
             onChange={(e) => set('designer', e.target.value)}
             style={FIELD_STYLE}
           />
         </Field>
 
-        <Field label="Attribuzione" id="f-attribution">
+        <Field label="Attribution" id="f-attribution">
           <input
             id="f-attribution"
+            name="attribution"
             value={form.attribution}
             onChange={(e) => set('attribution', e.target.value)}
-            placeholder="es. attr."
+            placeholder="e.g. attr."
             style={FIELD_STYLE}
           />
         </Field>
 
-        <Field label="Prezzo (€ interi) *" id="f-price">
+        <Field label="Price (€ whole) *" id="f-price">
           <input
             id="f-price"
+            name="price"
             type="number"
             inputMode="numeric"
             value={form.price}
@@ -375,6 +385,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
         <Field label="Shade Tone" id="f-shade">
           <select
             id="f-shade"
+            name="shade_tone"
             value={form.shade_tone}
             onChange={(e) => set('shade_tone', e.target.value)}
             style={{ ...FIELD_STYLE, cursor: 'pointer' }}
@@ -385,25 +396,27 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
           </select>
         </Field>
 
-        <Field label="Stato" id="f-status">
+        <Field label="Status" id="f-status">
           <select
             id="f-status"
+            name="status"
             value={form.status}
             onChange={(e) => set('status', e.target.value as ProductStatus)}
             style={{ ...FIELD_STYLE, cursor: 'pointer' }}
           >
-            <option value="available">Disponibile</option>
-            <option value="reserved">Riservato</option>
-            <option value="sold">Venduto</option>
+            <option value="available">Available</option>
+            <option value="reserved">Reserved</option>
+            <option value="sold">Sold</option>
           </select>
         </Field>
       </div>
 
       {/* Description — full width */}
       <div style={{ marginBottom: 20 }}>
-        <Field label="Descrizione" id="f-description">
+        <Field label="Description" id="f-description">
           <textarea
             id="f-description"
+            name="description"
             value={form.description}
             onChange={(e) => set('description', e.target.value)}
             rows={4}
@@ -415,7 +428,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
       {/* Existing images */}
       {existingImages.length > 0 && (
         <div style={{ marginBottom: 24 }}>
-          <div style={LABEL_STYLE}>Immagini ({existingImages.length}/{MAX_IMAGES})</div>
+          <div style={LABEL_STYLE}>Images ({existingImages.length}/{MAX_IMAGES})</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: 8 }}>
             {existingImages.map((img) => (
               <div key={img.id} style={{ position: 'relative', aspectRatio: '1/1', overflow: 'hidden' }}>
@@ -433,13 +446,14 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
                     fontFamily: 'var(--font-mono)', fontSize: 9,
                     textAlign: 'center', padding: '3px 0', letterSpacing: '0.1em',
                   }}>
-                    PRINCIPALE
+                    PRIMARY
                   </div>
                 )}
                 <button
                   type="button"
                   onClick={() => handleDeleteImage(img.id)}
                   disabled={deletingId === img.id}
+                  aria-label="Delete image"
                   style={{
                     position: 'absolute', top: 4, right: 4,
                     width: 22, height: 22, border: 0, borderRadius: '50%',
@@ -460,7 +474,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
       {remaining > 0 && (
         <div style={{ marginBottom: 32 }}>
           <label htmlFor="f-image" style={LABEL_STYLE}>
-            Aggiungi immagini (max {remaining} ancora{remaining === MAX_IMAGES ? '' : ` · ${existingImages.length} esistenti`})
+            Add images (max {remaining} more{remaining === MAX_IMAGES ? '' : ` · ${existingImages.length} existing`})
           </label>
           <input
             id="f-image"
@@ -475,7 +489,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
           />
           {imageFiles.length > 0 && (
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, opacity: 0.6, marginTop: 6 }}>
-              {imageFiles.length} file{imageFiles.length > 1 ? 's' : ''} selezionati
+              {imageFiles.length} file{imageFiles.length > 1 ? 's' : ''} selected
             </div>
           )}
         </div>
@@ -507,7 +521,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
             opacity: 0.7,
             marginBottom: 8,
           }}>
-            Caricamento — {uploadProgress}%
+            Uploading — {uploadProgress}%
           </div>
           <div style={{
             width: '100%',
@@ -544,12 +558,12 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
           }}
         >
           {uploadProgress !== null
-            ? `Caricamento ${uploadProgress}%…`
+            ? `Uploading ${uploadProgress}%…`
             : loading
-            ? 'Salvataggio…'
+            ? 'Saving…'
             : isEdit
-            ? 'Aggiorna pezzo'
-            : 'Crea pezzo'}
+            ? 'Update piece'
+            : 'Create piece'}
         </button>
 
         {isEdit && (
@@ -570,7 +584,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
               lineHeight: 1,
             }}
           >
-            Elimina pezzo
+            Delete piece
           </button>
         )}
       </div>

@@ -85,8 +85,8 @@ export default function Footer() {
             Editorial
           </div>
           {[
-            { label: 'Quaderno', href: '/quaderno' },
-            { label: 'Visita', href: '/visita' },
+            { label: 'Journal', href: '/quaderno' },
+            { label: 'Visit', href: '/visita' },
           ].map(({ label, href }) => (
             <Link
               key={href}
@@ -130,7 +130,7 @@ export default function Footer() {
             }}
           >
             <div>Via dell&#39;Orso 12</div>
-            <div>20121 Milano · Italia</div>
+            <div>20121 Milano · Italy</div>
             <div style={{ marginTop: 8 }}>
               <a
                 href="mailto:visita@redesign.shop"

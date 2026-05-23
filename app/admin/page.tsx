@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 };
 
 const STATUS_LABEL: Record<string, string> = {
-  available: 'Disponibile',
-  reserved: 'Riservato',
-  sold: 'Venduto',
+  available: 'Available',
+  reserved: 'Reserved',
+  sold: 'Sold',
 };
 
 const STATUS_COLOR: Record<string, string> = {
@@ -97,7 +97,7 @@ export default async function AdminPage() {
               whiteSpace: 'nowrap',
             }}
           >
-            + Nuovo pezzo
+            + New piece
           </Link>
           <AdminLogout />
         </div>
@@ -122,10 +122,10 @@ export default async function AdminPage() {
         }}
       >
         {[
-          { label: 'Totale', value: stats.total },
-          { label: 'Disponibili', value: stats.available, color: STATUS_COLOR.available },
-          { label: 'Riservati', value: stats.reserved, color: STATUS_COLOR.reserved },
-          { label: 'Venduti', value: stats.sold, color: STATUS_COLOR.sold },
+          { label: 'Total', value: stats.total },
+          { label: 'Available', value: stats.available, color: STATUS_COLOR.available },
+          { label: 'Reserved', value: stats.reserved, color: STATUS_COLOR.reserved },
+          { label: 'Sold', value: stats.sold, color: STATUS_COLOR.sold },
         ].map(({ label, value, color }) => (
           <div
             key={label}
@@ -170,7 +170,7 @@ export default async function AdminPage() {
           fontWeight: 400,
         }}
       >
-        Prodotti
+        Products
       </h2>
 
       <div style={{ overflowX: 'auto', marginBottom: 64 }}>
@@ -189,7 +189,7 @@ export default async function AdminPage() {
                 textAlign: 'left',
               }}
             >
-              {['Lot', 'Titolo', 'Maison', 'Prezzo', 'Stato', 'Azioni'].map((h) => (
+              {['Lot', 'Title', 'Maison', 'Price', 'Status', 'Actions'].map((h) => (
                 <th
                   key={h}
                   style={{
@@ -251,7 +251,7 @@ export default async function AdminPage() {
                       letterSpacing: '0.12em',
                     }}
                   >
-                    Modifica
+                    Edit
                   </Link>
                 </td>
               </tr>
@@ -271,7 +271,7 @@ export default async function AdminPage() {
           fontWeight: 400,
         }}
       >
-        Ordini recenti
+        Recent orders
       </h2>
 
       <div style={{ overflowX: 'auto' }}>
@@ -290,7 +290,7 @@ export default async function AdminPage() {
                 textAlign: 'left',
               }}
             >
-              {['Data', 'Cliente', 'Importo', 'Stato'].map((h) => (
+              {['Date', 'Customer', 'Amount', 'Status'].map((h) => (
                 <th
                   key={h}
                   style={{
@@ -319,7 +319,7 @@ export default async function AdminPage() {
                     fontSize: 12,
                   }}
                 >
-                  Nessun ordine ancora.
+                  No orders yet.
                 </td>
               </tr>
             ) : (
@@ -329,13 +329,13 @@ export default async function AdminPage() {
                   style={{ borderBottom: '1px solid rgba(20,20,20,0.07)' }}
                 >
                   <td style={{ padding: '12px 16px 12px 0', opacity: 0.7, whiteSpace: 'nowrap' }}>
-                    {new Date(o.created_at).toLocaleDateString('it-IT')}
+                    {new Date(o.created_at).toLocaleDateString('en-GB')}
                   </td>
                   <td style={{ padding: '12px 16px 12px 0' }}>
                     {o.customer_email ?? '—'}
                   </td>
                   <td style={{ padding: '12px 16px 12px 0', whiteSpace: 'nowrap' }}>
-                    € {(o.amount / 100).toLocaleString('it-IT')}
+                    € {(o.amount / 100).toLocaleString('en-GB')}
                   </td>
                   <td style={{ padding: '12px 16px 12px 0' }}>
                     <span

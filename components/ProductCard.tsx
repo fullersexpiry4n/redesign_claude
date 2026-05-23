@@ -37,6 +37,7 @@ export default function ProductCard({ piece, imageUrl }: ProductCardProps) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ objectFit: 'cover' }}
+            unoptimized
           />
         ) : (
           <LampSilhouette tone={piece.shadeTone} scale={1.3} />
@@ -89,7 +90,7 @@ export default function ProductCard({ piece, imageUrl }: ProductCardProps) {
             letterSpacing: '0.01em',
           }}
         >
-          € {piece.price.toLocaleString('it-IT')}
+          € {piece.price.toLocaleString('en-GB')}
         </div>
       </div>
     </Link>

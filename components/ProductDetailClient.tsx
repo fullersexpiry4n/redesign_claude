@@ -110,10 +110,10 @@ export default function ProductDetailClient({
             letterSpacing: '-0.01em',
           }}
         >
-          € {price.toLocaleString('it-IT')}
+          € {price.toLocaleString('en-GB')}
         </div>
         <MonoCaps size={10} opacity={0.5} style={{ whiteSpace: 'nowrap' }}>
-          + spedizione su richiesta
+          + shipping on request
         </MonoCaps>
       </div>
 
@@ -134,7 +134,7 @@ export default function ProductDetailClient({
             paddingBottom: 1,
           }}
         >
-          Richiesta informazioni
+          Enquire
         </a>
       </div>
 

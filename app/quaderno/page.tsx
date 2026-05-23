@@ -78,7 +78,7 @@ export default function QuadernoPage() {
 
           {/* Ritorni sidebar */}
           <aside>
-            <MonoCaps size={11} opacity={0.6}>Ritorni · Latest</MonoCaps>
+            <MonoCaps size={11} opacity={0.6}>Latest arrivals</MonoCaps>
             <BrassRule short style={{ margin: '12px 0 18px' }} />
             {ritorni.map((p) => (
               <div

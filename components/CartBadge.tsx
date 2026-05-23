@@ -29,7 +29,7 @@ export default function CartBadge() {
         (e.currentTarget as HTMLElement).style.borderBottomColor = 'transparent';
       }}
     >
-      {count > 0 ? `Carrello (${count})` : 'Carrello'}
+      {count > 0 ? `Cart (${count})` : 'Cart'}
     </Link>
   );
 }
