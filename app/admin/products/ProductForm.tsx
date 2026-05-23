@@ -111,6 +111,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<ProductImage[]>(images);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<{ current: number; total: number } | null>(null);
 
   const remaining = MAX_IMAGES - existingImages.length;
 
@@ -168,7 +169,11 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
     }
 
     // Upload new images sequentially
+    if (imageFiles.length > 0) {
+      setUploadProgress({ current: 0, total: imageFiles.length });
+    }
     for (let i = 0; i < imageFiles.length; i++) {
+      setUploadProgress({ current: i + 1, total: imageFiles.length });
       const file = imageFiles[i];
       const sortOrder = existingImages.length + i;
       const isPrimary = existingImages.length === 0 && i === 0;
@@ -182,11 +187,13 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
       const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
       if (!res.ok) {
         const body = await res.json();
+        setUploadProgress(null);
         setError(`Prodotto salvato, ma upload ${i + 1} fallito: ${body.error}`);
         setLoading(false);
         return;
       }
     }
+    setUploadProgress(null);
 
     router.push('/admin');
     router.refresh();
@@ -474,6 +481,33 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
         </div>
       )}
 
+      {uploadProgress && (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 11,
+            letterSpacing: '0.1em',
+            opacity: 0.7,
+            marginBottom: 8,
+          }}>
+            Caricamento immagine {uploadProgress.current} / {uploadProgress.total}
+          </div>
+          <div style={{
+            width: '100%',
+            height: 3,
+            background: 'rgba(20,20,20,0.12)',
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              height: '100%',
+              width: `${(uploadProgress.current / uploadProgress.total) * 100}%`,
+              background: 'var(--inchiostro)',
+              transition: 'width 200ms ease',
+            }} />
+          </div>
+        </div>
+      )}
+
       <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
         <button
           type="submit"
@@ -492,7 +526,13 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
             lineHeight: 1,
           }}
         >
-          {loading ? 'Salvataggio…' : isEdit ? 'Aggiorna pezzo' : 'Crea pezzo'}
+          {uploadProgress
+            ? `Caricamento ${uploadProgress.current}/${uploadProgress.total}…`
+            : loading
+            ? 'Salvataggio…'
+            : isEdit
+            ? 'Aggiorna pezzo'
+            : 'Crea pezzo'}
         </button>
 
         {isEdit && (
