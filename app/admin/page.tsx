@@ -83,6 +83,23 @@ export default async function AdminPage() {
 
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
           <Link
+            href="/admin/reprocess"
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 11,
+              textTransform: 'uppercase',
+              letterSpacing: '0.14em',
+              padding: '10px 20px',
+              border: '1px solid rgba(20,20,20,0.3)',
+              color: 'var(--inchiostro)',
+              textDecoration: 'none',
+              lineHeight: 1,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Reprocess images
+          </Link>
+          <Link
             href="/admin/products/new"
             style={{
               fontFamily: 'var(--font-mono)',
