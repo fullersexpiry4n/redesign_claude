@@ -111,7 +111,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<ProductImage[]>(images);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [uploadProgress, setUploadProgress] = useState<{ current: number; total: number } | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null); // 0–100
 
   const remaining = MAX_IMAGES - existingImages.length;
 
@@ -168,32 +168,49 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
       productId = data.id;
     }
 
-    // Upload new images sequentially
+    // Upload new images sequentially with byte-accurate progress
     if (imageFiles.length > 0) {
-      setUploadProgress({ current: 0, total: imageFiles.length });
-    }
-    for (let i = 0; i < imageFiles.length; i++) {
-      setUploadProgress({ current: i + 1, total: imageFiles.length });
-      const file = imageFiles[i];
-      const sortOrder = existingImages.length + i;
-      const isPrimary = existingImages.length === 0 && i === 0;
+      const totalBytes = imageFiles.reduce((s, f) => s + f.size, 0);
+      let doneBytes = 0;
+      setUploadProgress(0);
 
-      const fd = new FormData();
-      fd.append('file', file);
-      fd.append('productId', productId!);
-      fd.append('sortOrder', String(sortOrder));
-      fd.append('isPrimary', String(isPrimary));
+      for (let i = 0; i < imageFiles.length; i++) {
+        const file = imageFiles[i];
+        const sortOrder = existingImages.length + i;
+        const isPrimary = existingImages.length === 0 && i === 0;
 
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
-      if (!res.ok) {
-        const body = await res.json();
-        setUploadProgress(null);
-        setError(`Prodotto salvato, ma upload ${i + 1} fallito: ${body.error}`);
-        setLoading(false);
-        return;
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('productId', productId!);
+        fd.append('sortOrder', String(sortOrder));
+        fd.append('isPrimary', String(isPrimary));
+
+        const ok = await new Promise<boolean>((resolve) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', '/api/admin/upload');
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              const pct = Math.round(((doneBytes + e.loaded) / totalBytes) * 100);
+              setUploadProgress(Math.min(pct, 99));
+            }
+          };
+          xhr.onload = () => {
+            doneBytes += file.size;
+            resolve(xhr.status >= 200 && xhr.status < 300);
+          };
+          xhr.onerror = () => resolve(false);
+          xhr.send(fd);
+        });
+
+        if (!ok) {
+          setUploadProgress(null);
+          setError(`Prodotto salvato, ma upload ${i + 1} fallito`);
+          setLoading(false);
+          return;
+        }
       }
+      setUploadProgress(100);
     }
-    setUploadProgress(null);
 
     router.push('/admin');
     router.refresh();
@@ -481,7 +498,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
         </div>
       )}
 
-      {uploadProgress && (
+      {uploadProgress !== null && (
         <div style={{ marginBottom: 20 }}>
           <div style={{
             fontFamily: 'var(--font-mono)',
@@ -490,7 +507,7 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
             opacity: 0.7,
             marginBottom: 8,
           }}>
-            Caricamento immagine {uploadProgress.current} / {uploadProgress.total}
+            Caricamento — {uploadProgress}%
           </div>
           <div style={{
             width: '100%',
@@ -500,9 +517,9 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
           }}>
             <div style={{
               height: '100%',
-              width: `${(uploadProgress.current / uploadProgress.total) * 100}%`,
+              width: `${uploadProgress}%`,
               background: 'var(--inchiostro)',
-              transition: 'width 200ms ease',
+              transition: 'width 150ms ease',
             }} />
           </div>
         </div>
@@ -526,8 +543,8 @@ export default function ProductForm({ product, images = [] }: { product?: Produc
             lineHeight: 1,
           }}
         >
-          {uploadProgress
-            ? `Caricamento ${uploadProgress.current}/${uploadProgress.total}…`
+          {uploadProgress !== null
+            ? `Caricamento ${uploadProgress}%…`
             : loading
             ? 'Salvataggio…'
             : isEdit
