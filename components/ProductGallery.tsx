@@ -47,7 +47,7 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
   }
 
   return (
-    <div>
+    <div style={{ minWidth: 0, width: '100%' }}>
       {/* Main image */}
       <div
         onTouchStart={handleTouchStart}
@@ -209,6 +209,7 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
             marginTop: 12,
             overflowX: 'auto',
             paddingBottom: 2,
+            width: '100%',
           }}
         >
           {images.map((img, i) => {
