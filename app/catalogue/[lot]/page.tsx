@@ -78,7 +78,7 @@ export default async function ProductPage({ params }: Props) {
   };
 
   return (
-    <div style={{ padding: '40px var(--page-px) 96px' }}>
+    <div style={{ padding: '32px var(--page-px) 96px' }}>
       {/* Back */}
       <Link
         href="/catalogue"
