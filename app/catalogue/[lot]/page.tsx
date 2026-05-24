@@ -78,7 +78,7 @@ export default async function ProductPage({ params }: Props) {
   };
 
   return (
-    <div style={{ padding: '32px var(--page-px) 96px' }}>
+    <div style={{ padding: '16px var(--page-px) 96px' }}>
       {/* Back */}
       <Link
         href="/catalogue"
@@ -89,7 +89,7 @@ export default async function ProductPage({ params }: Props) {
           letterSpacing: '0.16em',
           opacity: 0.6,
           display: 'inline-block',
-          marginBottom: 40,
+          marginBottom: 20,
           color: 'var(--inchiostro)',
         }}
       >
