@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import LampSilhouette from './LampSilhouette';
 
@@ -12,21 +12,54 @@ type Props = {
   shadeTone: string;
 };
 
+const SWIPE_THRESHOLD = 50; // px
+
 export default function ProductGallery({ images, title, shadeTone }: Props) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [mainLoaded, setMainLoaded] = useState(false);
+  const touchStartX = useRef<number | null>(null);
   const active = images[activeIdx] ?? images[0] ?? null;
+
+  function goTo(idx: number) {
+    if (idx === activeIdx) return;
+    setMainLoaded(false);
+    setActiveIdx(idx);
+  }
+
+  function next() {
+    goTo((activeIdx + 1) % images.length);
+  }
+
+  function prev() {
+    goTo((activeIdx - 1 + images.length) % images.length);
+  }
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null || images.length < 2) return;
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (delta > SWIPE_THRESHOLD) prev();
+    else if (delta < -SWIPE_THRESHOLD) next();
+    touchStartX.current = null;
+  }
 
   return (
     <div>
       {/* Main image */}
       <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         style={{
           width: '100%',
           aspectRatio: '1 / 1',
           background: 'var(--carta)',
           position: 'relative',
           overflow: 'hidden',
+          touchAction: 'pan-y',
+          userSelect: 'none',
         }}
       >
         {/* Shimmer shown until image loads */}
@@ -42,6 +75,7 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
             style={{ objectFit: 'cover', opacity: mainLoaded ? 1 : 0, transition: 'opacity 300ms ease' }}
             priority
             unoptimized
+            draggable={false}
             onLoad={() => setMainLoaded(true)}
           />
         ) : (
@@ -54,7 +88,7 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
           <>
             <button
               type="button"
-              onClick={() => { setMainLoaded(false); setActiveIdx((activeIdx - 1 + images.length) % images.length); }}
+              onClick={prev}
               aria-label="Previous image"
               style={{
                 position: 'absolute',
@@ -80,7 +114,7 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
             </button>
             <button
               type="button"
-              onClick={() => { setMainLoaded(false); setActiveIdx((activeIdx + 1) % images.length); }}
+              onClick={next}
               aria-label="Next image"
               style={{
                 position: 'absolute',
@@ -104,6 +138,64 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
                 <path d="M7 4l5 5-5 5" stroke="var(--inchiostro)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
+
+            {/* Brass-dot pagination overlaid on the image — bottom-center */}
+            <div
+              role="tablist"
+              aria-label="Image pagination"
+              style={{
+                position: 'absolute',
+                bottom: 16,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                padding: '6px 12px',
+                background: 'rgba(255,255,255,0.55)',
+                backdropFilter: 'blur(6px)',
+                WebkitBackdropFilter: 'blur(6px)',
+                borderRadius: 20,
+              }}
+            >
+              {images.map((img, i) => {
+                const isActive = i === activeIdx;
+                return (
+                  <button
+                    key={img.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-label={`Image ${i + 1}`}
+                    onClick={() => goTo(i)}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      padding: 0,
+                      border: 0,
+                      background: 'transparent',
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        width: isActive ? 9 : 6,
+                        height: isActive ? 9 : 6,
+                        borderRadius: '50%',
+                        background: 'var(--ottone-brunito)',
+                        opacity: isActive ? 1 : 0.4,
+                        transition: 'opacity 160ms ease, width 160ms ease, height 160ms ease',
+                      }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </>
         )}
       </div>
@@ -113,43 +205,45 @@ export default function ProductGallery({ images, title, shadeTone }: Props) {
         <div
           style={{
             display: 'flex',
-            gap: 6,
-            marginTop: 8,
-            flexWrap: 'wrap',
+            gap: 8,
+            marginTop: 12,
+            overflowX: 'auto',
+            paddingBottom: 2,
           }}
         >
-          {images.map((img, i) => (
-            <button
-              key={img.id}
-              type="button"
-              onClick={() => { setMainLoaded(false); setActiveIdx(i); }}
-              aria-label={`Image ${i + 1}`}
-              aria-pressed={i === activeIdx}
-              style={{
-                width: 72,
-                height: 72,
-                padding: 0,
-                border: 0,
-                outline: i === activeIdx
-                  ? '2px solid var(--inchiostro)'
-                  : '1px solid rgba(20,20,20,0.12)',
-                cursor: 'pointer',
-                background: 'var(--carta)',
-                position: 'relative',
-                overflow: 'hidden',
-                flexShrink: 0,
-                transition: 'outline 80ms ease',
-              }}
-            >
-              <Image
-                src={img.url}
-                alt={`${title} ${i + 1}`}
-                fill
-                sizes="72px"
-                style={{ objectFit: 'cover' }}
-              />
-            </button>
-          ))}
+          {images.map((img, i) => {
+            const isActive = i === activeIdx;
+            return (
+              <button
+                key={img.id}
+                type="button"
+                aria-label={`View image ${i + 1}`}
+                onClick={() => goTo(i)}
+                style={{
+                  flexShrink: 0,
+                  width: 72,
+                  height: 72,
+                  padding: 0,
+                  border: `2px solid ${isActive ? 'var(--ottone-brunito)' : 'transparent'}`,
+                  background: 'var(--carta)',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  opacity: isActive ? 1 : 0.6,
+                  transition: 'opacity 160ms ease, border-color 160ms ease',
+                }}
+              >
+                <Image
+                  src={img.url}
+                  alt={`${title} ${i + 1}`}
+                  fill
+                  sizes="72px"
+                  style={{ objectFit: 'cover' }}
+                  unoptimized
+                />
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
