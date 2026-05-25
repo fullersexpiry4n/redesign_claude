@@ -203,7 +203,7 @@ export default function ContactPage() {
             }}
           >
             {[
-              ['Address', 'Via dell\'Orso 12\n20121 Milano · Italia'],
+              ['Address', 'Via dell\'Orso 12\n20121 Milano · Italy'],
               ['Hours', 'Tue — Sat\n11:00 — 18:00 · by appointment'],
               ['Email', 'visita@redesign.shop'],
               ['Phone', '+39 02 8242 0000'],

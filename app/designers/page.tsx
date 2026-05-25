@@ -34,7 +34,7 @@ export default function DesignersPage() {
           <em>Designers</em>
         </h1>
         <MonoCaps opacity={0.6}>
-          {DESIGNERS.length} autori · 1912 — presente
+          {DESIGNERS.length} designers · 1912 — present
         </MonoCaps>
       </div>
 
@@ -156,7 +156,7 @@ export default function DesignersPage() {
             >
               {d.maison}
             </div>
-            <MonoCaps size={10} opacity={0.55}>In catalogo</MonoCaps>
+            <MonoCaps size={10} opacity={0.55}>In catalogue</MonoCaps>
             <div
               style={{
                 fontFamily: 'var(--font-mono)',
@@ -169,7 +169,7 @@ export default function DesignersPage() {
           </div>
 
           <Button variant="ghost" href="/catalogue">
-            VEDI I PEZZI · VIEW PIECES
+            VIEW PIECES
           </Button>
         </div>
       </div>

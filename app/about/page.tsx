@@ -288,7 +288,7 @@ export default function AboutPage() {
             display: 'inline-block',
           }}
         >
-          RICHIESTA · ENQUIRE
+          ENQUIRE
         </Link>
       </div>
     </div>
