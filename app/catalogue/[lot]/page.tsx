@@ -51,20 +51,20 @@ export default async function ProductPage({ params }: Props) {
   const sortedImages = images ?? [];
 
   const meta: Record<string, string> = p.meta ?? {
-    Periodo: String(p.year),
-    Materiali: '—',
-    Dimensioni: '—',
-    Cablatura: 'sostituita, conforme CE',
-    Stato: 'eccellente',
+    Period: String(p.year),
+    Materials: '—',
+    Dimensions: '—',
+    Wiring: 'replaced, CE compliant',
+    Condition: 'excellent',
   };
 
   const desc =
     p.description ??
-    `Pezzo di ${p.maison_name}, ${p.city}. Documentato e restaurato. Cablatura conforme CE.`;
+    `Piece by ${p.maison_name}, ${p.city}. Documented and restored. CE compliant wiring.`;
 
   const prov = p.provenance ?? [
     { label: `${p.city}, c. ${p.year}` },
-    { label: 'Collezione privata', unknown: true },
+    { label: 'Private collection', unknown: true },
     { label: 'Returned, 2026' },
   ];
 
@@ -114,7 +114,7 @@ export default async function ProductPage({ params }: Props) {
           city={p.city}
           year={p.year}
           designer={p.designer ?? '—'}
-          attribution={p.attribution ?? 'Manifattura'}
+          attribution={p.attribution ?? 'Manufacturer'}
           price={p.price}
           status={p.status}
           meta={meta}
