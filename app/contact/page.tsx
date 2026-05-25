@@ -35,7 +35,7 @@ export default function ContactPage() {
         >
           <em>Contact</em>
         </h1>
-        <MonoCaps opacity={0.6}>Visita · Condition Report · Enquire</MonoCaps>
+        <MonoCaps opacity={0.6}>Visit · Condition Report · Enquire</MonoCaps>
       </div>
 
       <DrawRule width={80} style={{ margin: '24px 0 56px' }} />

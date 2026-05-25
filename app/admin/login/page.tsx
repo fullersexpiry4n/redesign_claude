@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
     });
 
     if (authError) {
-      setError('Credenziali non valide. · Invalid credentials.');
+      setError('Invalid credentials.');
       setLoading(false);
       return;
     }

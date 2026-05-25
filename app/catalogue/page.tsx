@@ -4,9 +4,9 @@ import CatalogueClient from './CatalogueClient';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Catalogo · RE·DESIGN',
+  title: 'Catalogue · RE·DESIGN',
   description:
-    "Pezzi unici di illuminazione italiana d'autore, 1960–2000. Stilnovo, Arteluce, Flos, O‑Luce e altri.",
+    "Unique pieces of authored Italian lighting, 1960–2000. Stilnovo, Arteluce, Flos, O‑Luce and others.",
 };
 
 export const revalidate = 60;

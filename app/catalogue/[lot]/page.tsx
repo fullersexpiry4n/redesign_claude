@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${p.title} · ${p.maison_name} · RE·DESIGN`,
-    description: p.description ?? `${p.maison_name} — ${p.title}. Illuminazione italiana d'autore.`,
+    description: p.description ?? `${p.maison_name} — ${p.title}. Authored Italian lighting.`,
   };
 }
 
